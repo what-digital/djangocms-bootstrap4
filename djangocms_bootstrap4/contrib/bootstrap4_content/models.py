@@ -41,14 +41,14 @@ class Bootstrap4Blockquote(TranslatablePluginModel):
     https://getbootstrap.com/docs/4.0/content/typography/#blockquotes
     """
     translations = TranslatedFields(
-        quote_content_new=models.TextField(
+        quote_content=models.TextField(
             verbose_name=_('Quote'),
         ),
-        quote_origin_new=models.TextField(
+        quote_origin=models.TextField(
             verbose_name=_('Cite'),
             blank=True,
         ),
-        quote_alignment_new=models.CharField(
+        quote_alignment=models.CharField(
             verbose_name=_('Alignment'),
             choices=ALIGN_CHOICES,
             default=ALIGN_CHOICES[0][0],
@@ -56,20 +56,7 @@ class Bootstrap4Blockquote(TranslatablePluginModel):
             max_length=255,
         ),
     )
-    quote_content = models.TextField(
-        verbose_name=_('Quote'),
-    )
-    quote_origin = models.TextField(
-        verbose_name=_('Cite'),
-        blank=True,
-    )
-    quote_alignment = models.CharField(
-        verbose_name=_('Alignment'),
-        choices=ALIGN_CHOICES,
-        default=ALIGN_CHOICES[0][0],
-        blank=True,
-        max_length=255,
-    )
+
     attributes = AttributesField()
 
     def __str__(self):
