@@ -4,6 +4,7 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
 from djangocms_bootstrap4.helpers import concat_classes
+from djangocms_bootstrap4.translatable_utils import TranslatablePlugin
 
 from .forms import Bootstrap4CodeForm
 from .models import Bootstrap4Blockquote, Bootstrap4Code, Bootstrap4Figure
@@ -38,7 +39,7 @@ class Bootstrap4CodePlugin(CMSPluginBase):
     ]
 
 
-class Bootstrap4BlockquotePlugin(CMSPluginBase):
+class Bootstrap4BlockquotePlugin(TranslatablePlugin):
     """
     Content > "Blockquote" Plugin
     https://getbootstrap.com/docs/4.0/content/typography/#blockquotes
@@ -67,12 +68,13 @@ class Bootstrap4BlockquotePlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         link_classes = ['blockquote']
-        if instance.quote_alignment:
-            link_classes.append(instance.quote_alignment)
-        classes = concat_classes(link_classes + [
-            instance.attributes.get('class'),
-        ])
-        instance.attributes['class'] = classes
+        if instance.has_translation():
+            if instance.quote_alignment:
+                link_classes.append(instance.quote_alignment)
+            classes = concat_classes(link_classes + [
+                instance.attributes.get('class'),
+            ])
+            instance.attributes['class'] = classes
 
         return super().render(
             context, instance, placeholder

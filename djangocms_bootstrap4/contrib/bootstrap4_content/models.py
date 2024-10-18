@@ -5,6 +5,9 @@ from cms.models import CMSPlugin
 
 from djangocms_bootstrap4.constants import ALIGN_CHOICES
 from djangocms_bootstrap4.fields import AttributesField
+from djangocms_bootstrap4.translatable_utils import TranslatablePluginModel
+
+from parler.models import TranslatedFields
 
 from .constants import CODE_TYPE_CHOICES
 
@@ -32,11 +35,27 @@ class Bootstrap4Code(CMSPlugin):
         return f'<{self.tag_type}>'
 
 
-class Bootstrap4Blockquote(CMSPlugin):
+class Bootstrap4Blockquote(TranslatablePluginModel):
     """
     Content > "Blockquote" Plugin
     https://getbootstrap.com/docs/4.0/content/typography/#blockquotes
     """
+    translations = TranslatedFields(
+        quote_content_new=models.TextField(
+            verbose_name=_('Quote'),
+        ),
+        quote_origin_new=models.TextField(
+            verbose_name=_('Cite'),
+            blank=True,
+        ),
+        quote_alignment_new=models.CharField(
+            verbose_name=_('Alignment'),
+            choices=ALIGN_CHOICES,
+            default=ALIGN_CHOICES[0][0],
+            blank=True,
+            max_length=255,
+        ),
+    )
     quote_content = models.TextField(
         verbose_name=_('Quote'),
     )
