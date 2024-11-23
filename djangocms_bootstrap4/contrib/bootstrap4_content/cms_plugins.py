@@ -68,7 +68,7 @@ class Bootstrap4BlockquotePlugin(TranslatablePlugin):
 
     def render(self, context, instance, placeholder):
         link_classes = ['blockquote']
-        if instance.has_translation():
+        if instance.has_translation_or_fallback():
             if instance.quote_alignment:
                 link_classes.append(instance.quote_alignment)
             classes = concat_classes(link_classes + [
